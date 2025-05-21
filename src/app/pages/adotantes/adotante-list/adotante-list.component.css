@@ -1,0 +1,353 @@
+
+.adotante-list {
+  max-width: 1100px;
+  margin: 100px auto 60px auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.adotante-list h2 {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  color: #2e7d32;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.adotante-list .search-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.adotante-list .search-container input[type="text"] {
+  width: 300px;
+  max-width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.adotante-list .search-container input[type="text"]:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 6px #4caf50aa;
+}
+
+.adotante-list .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.adotante-list .pet-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+}
+
+.adotante-list .pet-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.adotante-list .pet-card .info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.adotante-list .pet-card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  color: #388e3c;
+}
+
+.adotante-list .pet-card p {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.adotante-list .pet-card button {
+  align-self: flex-start;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  box-shadow: 0 3px 6px rgba(76,175,80,0.5);
+}
+
+.adotante-list .pet-card button:hover {
+  background-color: #388e3c;
+  box-shadow: 0 6px 12px rgba(56,142,60,0.7);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.modal h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #2e7d32;
+  text-align: center;
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #5D473A;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.modal input:focus,
+.modal select:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 6px #4caf50aa;
+}
+
+.modal .error {
+  color: #f44336;
+  font-size: 0.875rem;
+  margin-top: 5px;
+  display: block;
+}
+
+.modal div[style] {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.modal button[type="button"] {
+  background-color: #f44336;
+  color: white;
+  box-shadow: 0 3px 6px rgba(244, 67, 54, 0.5);
+}
+
+.modal button[type="button"]:hover {
+  background-color: #d32f2f;
+  box-shadow: 0 6px 12px rgba(211, 47, 47, 0.7);
+}
+
+.modal button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  box-shadow: 0 3px 6px rgba(76, 175, 80, 0.5);
+}
+
+.modal button[type="submit"]:hover {
+  background-color: #388e3c;
+  box-shadow: 0 6px 12px rgba(56, 142, 60, 0.7);
+}
+
+.fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 56px;
+  height: 56px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.fab:hover {
+  background-color: #388e3c;
+  transform: scale(1.05);
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #7BAF7B;
+  color: #5D473A;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.header .container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.logo i {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.nav-menu a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+  color: #e0e0e0;
+}
+
+
+@media (max-width: 768px) {
+  .adotante-list {
+    margin: 60px 15px 40px 15px;
+    padding: 0 10px;
+    max-width: 100%;
+  }
+
+  .adotante-list h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .adotante-list .search-container input[type="text"] {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .adotante-list .grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .adotante-list .pet-card {
+    padding: 15px;
+  }
+
+  .adotante-list .pet-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .adotante-list .pet-card p {
+    font-size: 0.9rem;
+  }
+
+  .adotante-list .pet-card button {
+    padding: 8px 18px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .adotante-list {
+    margin: 40px 10px 30px 10px;
+    padding: 0 8px;
+  }
+
+  .adotante-list h2 {
+    font-size: 1.5rem;
+  }
+
+  .adotante-list .search-container input[type="text"] {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .adotante-list .grid {
+    grid-template-columns: 1fr; 
+    gap: 15px;
+  }
+
+  .adotante-list .pet-card {
+    padding: 12px;
+  }
+
+  .adotante-list .pet-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .adotante-list .pet-card p {
+    font-size: 0.85rem;
+  }
+
+  .adotante-list .pet-card button {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    width: 100%; 
+  }
+}
+
+@media (max-width: 480px) {
+  .header .container {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+    gap: 10px;
+  }
+
+  .nav-menu a {
+    margin-left: 15px;
+    font-size: 0.9rem;
+  }
+}

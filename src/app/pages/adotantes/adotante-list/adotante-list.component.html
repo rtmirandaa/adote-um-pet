@@ -1,0 +1,98 @@
+
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <i class="fas fa-paw"></i> Adoção de Pets
+    </div>
+    <nav class="nav-menu">
+      <a href="#pets" class="active">Pets</a>
+      <a href="#adotantes" class="active">Adotantes</a>
+
+    </nav>
+  </div>
+</header>
+<section class="adotante-list" id="adotantes">
+  <h2>Adotantes</h2>
+
+  <div class="search-container">
+    <input
+      type="text"
+      placeholder="Buscar adotante pelo nome..."
+      [(ngModel)]="searchTerm"
+    />
+  </div>
+
+  <div class="grid">
+    <div class="pet-card" *ngFor="let adotante of adotantes | filtroAdotantes:searchTerm">
+      <div class="info">
+        <h3>{{ adotante.nome }}</h3>
+        <p><strong>Email:</strong> {{ adotante.email }}</p>
+        <p><strong>Telefone:</strong> {{ adotante.telefone }}</p>
+        <p><strong>Pet Adotado:</strong> {{ getPetNome(adotante.petId) || 'Nenhum' }}</p>
+
+        <button (click)="editarAdotante(adotante)">Editar</button>
+        <button (click)="excluirAdotante(adotante.id)">Excluir</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal-overlay" *ngIf="editando">
+  <div class="modal">
+    <h2>{{ adotanteEmEdicao.id === 0 ? 'Novo Adotante' : 'Editar Adotante' }}</h2>
+    <form (ngSubmit)="salvarAdotante()" #adotanteForm="ngForm" novalidate>
+      <label>
+        Nome:
+        <input
+          type="text"
+          [(ngModel)]="adotanteEmEdicao.nome"
+          name="nome"
+          required
+          #nome="ngModel"
+        />
+        <span *ngIf="nome.invalid && nome.touched" class="error">Nome é obrigatório.</span>
+      </label>
+
+      <label>
+        Email:
+        <input
+          type="email"
+          [(ngModel)]="adotanteEmEdicao.email"
+          name="email"
+          required
+          #email="ngModel"
+        />
+        <span *ngIf="email.invalid && email.touched" class="error">Email é obrigatório.</span>
+      </label>
+
+      <label>
+        Telefone:
+        <input
+          type="text"
+          [(ngModel)]="adotanteEmEdicao.telefone"
+          name="telefone"
+          required
+          #telefone="ngModel"
+        />
+        <span *ngIf="telefone.invalid && telefone.touched" class="error">Telefone é obrigatório.</span>
+      </label>
+      <label>
+        Pet Adotado:
+        <select [(ngModel)]="adotanteEmEdicao.petId" name="petId">
+          <option [ngValue]="undefined">Nenhum</option>
+          <option *ngFor="let pet of pets" [ngValue]="pet.id">{{ pet.nome }}</option>
+        </select>
+      </label>
+      <div style="margin-top: 20px; text-align: right;">
+        <button type="button" (click)="cancelarEdicao()">Cancelar</button>
+        <button type="submit" [disabled]="adotanteForm.invalid">
+          {{ adotanteEmEdicao.id === 0 ? 'Adicionar' : 'Salvar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<button class="fab" (click)="novoAdotante()">
+  <i class="fas fa-plus">+</i>
+</button>

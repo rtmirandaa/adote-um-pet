@@ -1,0 +1,116 @@
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <i class="fas fa-paw"></i> Adoção de Pets
+    </div>
+    <nav class="nav-menu">
+      <a href="#pets" class="active">Pets</a>
+      <a href="/adotantes" class="active">Adotantes</a>
+
+    </nav>
+  </div>
+</header>
+
+<section class="pet-list" id="pets">
+  <h2>Pets disponíveis para Adoção</h2>
+
+  <div class="search-container">
+    <input
+      type="text"
+      placeholder="Buscar pet pelo nome..."
+      [(ngModel)]="searchTerm"
+    />
+  </div>
+  
+  <div class="grid">
+    <div class="pet-card" *ngFor="let pet of pets | filtroPets:searchTerm">
+      <img [src]="pet.imagem" [alt]="pet.nome" />
+      <div class="info">
+        <h3>{{ pet.nome }}</h3>
+        <p><strong>Tipo:</strong> {{ pet.tipo }}</p>
+        <p><strong>Raça:</strong> {{ pet.raca }}</p>
+        <p><strong>Idade:</strong> {{ pet.idade }} anos</p>
+        <p><strong>Adotante:</strong> {{ getAdotanteNome(pet.adotanteId) }}</p>
+
+        <button (click)="deletePet(pet.id)">Excluir</button>
+        <button (click)="prepareEditPet(pet)">Editar</button>
+
+        <div *ngIf="!pet.adotado" style="margin-top: 10px;">
+        <select [(ngModel)]="selectedUserIds[pet.id]" name="selectedUserId-{{pet.id}}">
+          <option value="" disabled selected>Selecione um adotante</option>
+          <option *ngFor="let user of adotante" [value]="user.id">{{ user.nome }}</option>
+        </select>
+          <button (click)="adoptPet(pet.id)">Adotar</button>
+        </div>
+        <p *ngIf="pet.adotado" style="color: green; font-weight: bold; margin-top: 10px;">
+          Pet já adotado
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal-overlay" *ngIf="showForm">
+  <div class="modal">
+    <h2>{{ isEditing ? 'Editar Pet' : 'Adicionar Pet' }}</h2>
+    <form (ngSubmit)="submitForm()" #petForm="ngForm" novalidate>
+      <label>
+        Nome:
+        <input type="text" [(ngModel)]="currentPetForm.nome" name="nome" required #nome="ngModel" />
+        <span *ngIf="nome.invalid && nome.touched" class="error">Nome é obrigatório.</span>
+      </label>
+
+      <label>
+        Tipo:
+        <input type="text" [(ngModel)]="currentPetForm.tipo" name="tipo" required #tipo="ngModel" />
+        <span *ngIf="tipo.invalid && tipo.touched" class="error">Tipo é obrigatório.</span>
+      </label>
+
+      <label>
+        RaÃ§a:
+        <input type="text" [(ngModel)]="currentPetForm.raca" name="raca" required #raca="ngModel" />
+        <span *ngIf="raca.invalid && raca.touched" class="error">Raça é obrigatória.</span>
+      </label>
+
+      <label>
+        Idade:
+        <input
+          type="number"
+          [(ngModel)]="currentPetForm.idade"
+          name="idade"
+          min="0"
+          required
+          #idade="ngModel"
+        />
+        <span *ngIf="idade.invalid && idade.touched" class="error">
+          A idade deve ser um número maior ou igual a 0.
+        </span>
+      </label>
+
+      <label>
+        Imagem (URL):
+        <input
+          type="url"
+          [(ngModel)]="currentPetForm.imagem"
+          name="imagem"
+          pattern="https?://.+"
+          #imagem="ngModel"
+        />
+        <span *ngIf="imagem.invalid && imagem.touched" class="error">
+          Informe uma URL válida (começa com http:// ou https://).
+        </span>
+      </label>
+
+      <div style="margin-top: 20px; text-align: right;">
+        <button type="button" (click)="cancelEdit()">Cancelar</button>
+        <button type="submit" [disabled]="petForm.invalid">
+          {{ isEditing ? 'Salvar' : 'Adicionar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<button class="fab" (click)="openAddPetForm()">
+  <i class="fas fa-plus">+</i>
+</button>
